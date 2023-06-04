@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="PaintDotNet.Core">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="PaintDotNet.ComponentModel">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.ComponentModel.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+</Project>
