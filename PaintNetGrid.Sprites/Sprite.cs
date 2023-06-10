@@ -2,8 +2,8 @@
 
 namespace PaintNetGrid.Sprites;
 
-public sealed class SpriteMask {
-	public SpriteMask(List<(int, int, Color Col)> mask, AABB boundingBox, ISpritesheet sheet) {
+public sealed class Sprite {
+	public Sprite(List<(int, int, Color Col)> mask, AABB boundingBox, ISpritesheet sheet) {
 		Mask = mask;
 		BoundingBox = boundingBox;
 

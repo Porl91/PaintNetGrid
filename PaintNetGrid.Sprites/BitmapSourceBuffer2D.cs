@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace PaintNetGrid.Sprites;
+﻿namespace PaintNetGrid.Sprites;
 
 public sealed class BitmapSourceBuffer2D : ISourceBuffer2D {
 	private readonly Bitmap _source;

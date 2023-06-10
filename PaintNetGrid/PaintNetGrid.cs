@@ -21,7 +21,7 @@ using System.Runtime.Versioning;
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyMetadata("BuiltByCodeLab", "Version=6.8.8422.38978")]
-[assembly: SupportedOSPlatform("Windows")]
+[assembly: SupportedOSPlatform("windows7.0")]
 
 namespace PaintNetGrid;
 

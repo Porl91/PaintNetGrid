@@ -25,7 +25,7 @@ public partial class PaintNetGridPlugin {
 
 		var source = new SurfaceSourceBuffer2D(src);
 		var spriteMasks = new SpriteExtractor(source, Color.FromArgb(255, 247, 247, 247))
-			.ComputeMasks();
+			.Extract();
 
 		var cellStartX = 0;
 		var cellStartY = 0;

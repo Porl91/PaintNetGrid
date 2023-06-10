@@ -9,4 +9,8 @@ public struct AABB {
 	public bool Contains(int x, int y) {
 		return !(x < X || y < Y || x >= X + Width || y >= Y + Height);
 	}
+
+	public bool OverlapsVertically(ref AABB other) {
+		return !(Y + Height < other.Y || Y > other.Y + other.Height);
+	}
 }

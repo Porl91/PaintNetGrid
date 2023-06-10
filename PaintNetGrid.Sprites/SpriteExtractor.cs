@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace PaintNetGrid.Sprites;
 
@@ -14,9 +13,11 @@ public sealed class SpriteExtractor {
 		_sheet = new Spritesheet(_source);
 	}
 
-	public List<SpriteMask> ComputeMasks() {
-		var masks = new List<SpriteMask>();
+	public List<Sprite> Extract() {
+		var sprites = new List<Sprite>();
 		var used = new HashSet<int>();
+
+		var maskCopies = new List<(int X, int Y, Color Col)[]>();
 
 		for (var y = 0; y < _source.Height; y++) {
 			for (var x = 0; x < _source.Width; x++) {
@@ -27,24 +28,18 @@ public sealed class SpriteExtractor {
 
 				if (!IsWhitespaceColour(ref col)) {
 					var mask = new List<(int X, int Y, Color Col)>();
-					var path = new Stack<(int X, int Y)>();
+					var path = new Stack<PathNode>();
 
-					(int X, int Y)? current = null;
+					TryMove(x, y);
 
-					_ = TryUse(x, y);
-
-					while (current is not null) {
-						var currentX = current.Value.X;
-						var currentY = current.Value.Y;
-
-						if (!TryUse(currentX, currentY - 1)
-							&& !TryUse(currentX, currentY + 1)
-							&& !TryUse(currentX + 1, currentY)
-							&& !TryUse(currentX - 1, currentY)) {
-							if (!path.TryPop(out var previous)) {
+					while (path.TryPeek(out var current)) {
+						if (!TryMove(current.X, current.Y - 1)
+							&& !TryMove(current.X, current.Y + 1)
+							&& !TryMove(current.X + 1, current.Y)
+							&& !TryMove(current.X - 1, current.Y)) {
+							if (!path.TryPop(out current)) {
 								break;
 							}
-							current = previous;
 						}
 					}
 
@@ -53,7 +48,7 @@ public sealed class SpriteExtractor {
 					var minY = mask.Min(m => m.Y);
 					var maxY = mask.Max(m => m.Y);
 
-					masks.Add(new SpriteMask(
+					sprites.Add(new Sprite(
 						mask,
 						new AABB {
 							X = minX,
@@ -64,7 +59,7 @@ public sealed class SpriteExtractor {
 						_sheet
 					));
 
-					bool TryUse(int x, int y) {
+					bool TryMove(int x, int y) {
 						if (x < 0 || y < 0 || x >= _source.Width || y >= _source.Height)
 							return false;
 
@@ -76,10 +71,13 @@ public sealed class SpriteExtractor {
 							return false;
 						}
 
-						path.Push((x, y));
+						path.Push(new PathNode {
+							X = x,
+							Y = y
+						});
+
 						used.Add(_sheet.Index(x, y));
 						mask.Add((x, y, col));
-						current = path.Peek();
 
 						return true;
 					}
@@ -87,12 +85,33 @@ public sealed class SpriteExtractor {
 			}
 		}
 
-		return masks;
+		return OrderSprites(sprites);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		bool IsUsed(int x, int y) {
 			return used.Contains(_sheet.Index(x, y));
 		}
+	}
+
+	private static List<Sprite> OrderSprites(List<Sprite> sprites) {
+		var rows = new List<List<Sprite>>();
+
+		foreach (var sprite in sprites) {
+			var bb = sprite.BoundingBox;
+
+			var row = rows.FirstOrDefault(r => r.Any(s => s.BoundingBox.OverlapsVertically(ref bb)));
+
+			if (row is not null) {
+				row.Add(sprite);
+			} else {
+				rows.Add(new List<Sprite> { sprite });
+			}
+		}
+
+		return rows.Select(r => r.OrderBy(s => s.BoundingBox.X))
+			.OrderBy(r => r.Min(s => s.BoundingBox.Y + s.BoundingBox.Height / 2))
+			.SelectMany(r => r)
+			.ToList();
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -101,5 +120,14 @@ public sealed class SpriteExtractor {
 			&& c.G == _spaceColour.G
 			&& c.B == _spaceColour.B
 			&& c.A == _spaceColour.A;
+	}
+
+	public class PathNode {
+		public int X;
+		public int Y;
+
+		public override string ToString() {
+			return $"{X}, {Y}";
+		}
 	}
 }

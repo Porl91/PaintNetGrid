@@ -1,21 +1,62 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+		<Deterministic>False</Deterministic>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWindowsForms>True</UseWindowsForms>
+		<UseWPF>True</UseWPF>
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="PaintDotNet.Core">
-			<HintPath>C:\Program Files\paint.net\PaintDotNet.Core.dll</HintPath>
-		</Reference>
 		<Reference Include="PaintDotNet.ComponentModel">
 			<HintPath>C:\Program Files\paint.net\PaintDotNet.ComponentModel.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Core">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Core.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Effects.Core">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Effects.Core.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Effects.Gpu">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Effects.Gpu.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Fundamentals">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Fundamentals.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Framework">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Framework.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Primitives">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Primitives.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.PropertySystem">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.PropertySystem.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Windows">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Windows.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Windows.Core">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Windows.Core.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="PaintDotNet.Windows.Framework">
+			<HintPath>C:\Program Files\paint.net\PaintDotNet.Windows.Framework.dll</HintPath>
+			<Private>False</Private>
 		</Reference>
 	</ItemGroup>
 
