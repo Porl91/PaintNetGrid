@@ -1,4 +1,6 @@
-﻿using PaintNetGrid.Sprites;
+﻿#pragma warning disable CS0162 // Unreachable code detected
+
+using PaintNetGrid.Sprites;
 
 using System.Diagnostics;
 using System.Drawing;
@@ -19,8 +21,8 @@ return;
 var output = new Bitmap(input.Width, input.Height);
 
 foreach (var sprite in sprites) {
-	foreach (var (X, Y, Col) in sprite.Mask) {
-		output.SetPixel(X, Y, Col);
+	foreach (var (X, Y, Colour) in sprite.Colours) {
+		output.SetPixel(X, Y, Colour);
 	}
 }
 

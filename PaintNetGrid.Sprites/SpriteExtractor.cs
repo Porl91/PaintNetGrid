@@ -17,8 +17,6 @@ public sealed class SpriteExtractor {
 		var sprites = new List<Sprite>();
 		var used = new HashSet<int>();
 
-		var maskCopies = new List<(int X, int Y, Color Col)[]>();
-
 		for (var y = 0; y < _source.Height; y++) {
 			for (var x = 0; x < _source.Width; x++) {
 				if (IsUsed(x, y))
@@ -27,7 +25,7 @@ public sealed class SpriteExtractor {
 				var col = _source.GetPixel(x, y);
 
 				if (!IsWhitespaceColour(ref col)) {
-					var mask = new List<(int X, int Y, Color Col)>();
+					var colours = new List<(int X, int Y, Color Col)>();
 					var path = new Stack<PathNode>();
 
 					TryMove(x, y);
@@ -43,13 +41,13 @@ public sealed class SpriteExtractor {
 						}
 					}
 
-					var minX = mask.Min(m => m.X);
-					var maxX = mask.Max(m => m.X);
-					var minY = mask.Min(m => m.Y);
-					var maxY = mask.Max(m => m.Y);
+					var minX = colours.Min(m => m.X);
+					var maxX = colours.Max(m => m.X);
+					var minY = colours.Min(m => m.Y);
+					var maxY = colours.Max(m => m.Y);
 
 					sprites.Add(new Sprite(
-						mask,
+						colours,
 						new AABB {
 							X = minX,
 							Y = minY,
@@ -77,7 +75,7 @@ public sealed class SpriteExtractor {
 						});
 
 						used.Add(_sheet.Index(x, y));
-						mask.Add((x, y, col));
+						colours.Add((x, y, col));
 
 						return true;
 					}

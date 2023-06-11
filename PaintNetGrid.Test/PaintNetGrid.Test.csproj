@@ -63,16 +63,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="Goldens\CowboySprites-Bug1.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Goldens\CowboySprites.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+		<None Update="Goldens\CowboySprites-Bug1.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Goldens\CowboySprites.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Goldens\Frames\" />
+		<Folder Include="Goldens\Frames\" />
 	</ItemGroup>
 
 </Project>

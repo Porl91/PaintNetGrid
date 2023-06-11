@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<UseWindowsForms>True</UseWindowsForms>
+		<UseWPF>True</UseWPF>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-		<Deterministic>False</Deterministic>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<UseWindowsForms>True</UseWindowsForms>
-		<UseWPF>True</UseWPF>
 		<Nullable>disable</Nullable>
+		<Deterministic>False</Deterministic>
 	</PropertyGroup>
+
 	<ItemGroup>
 		<Reference Include="PaintDotNet.ComponentModel">
 			<HintPath>C:\Program Files\paint.net\PaintDotNet.ComponentModel.dll</HintPath>

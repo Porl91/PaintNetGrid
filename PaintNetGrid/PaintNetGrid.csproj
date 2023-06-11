@@ -1,20 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<UseWindowsForms>true</UseWindowsForms>
+		<UseWPF>true</UseWPF>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<RootNamespace>PaintNetGrid</RootNamespace>
-		<AssemblyName>PaintNetGrid</AssemblyName>
-		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+		<RootNamespace>PaintNetGrid</RootNamespace>
 		<Deterministic>false</Deterministic>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\PaintNetGrid.Sprites\PaintNetGrid.Sprites.csproj" />
+		<ProjectReference Include="..\PaintNetGrid.Sprites\PaintNetGrid.Sprites.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

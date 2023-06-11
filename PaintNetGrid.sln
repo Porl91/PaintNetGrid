@@ -6,7 +6,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaintNetGrid", "PaintNetGri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaintNetGrid.Sprites", "PaintNetGrid.Sprites\PaintNetGrid.Sprites.csproj", "{BB81AC3C-ADB3-4DC4-9C17-1BD219CCCCC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaintNetGrid.Test", "PaintNetGrid.Test\PaintNetGrid.Test.csproj", "{DD9FDF07-6E2D-416A-B3E9-7F7ECB5F6941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaintNetGrid.Test", "PaintNetGrid.Test\PaintNetGrid.Test.csproj", "{DD9FDF07-6E2D-416A-B3E9-7F7ECB5F6941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaintNetGrid.Tests", "PaintNetGrid.Tests\PaintNetGrid.Tests.csproj", "{C5F9E99D-C500-4E74-B009-3FFC66762EB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{DD9FDF07-6E2D-416A-B3E9-7F7ECB5F6941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD9FDF07-6E2D-416A-B3E9-7F7ECB5F6941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD9FDF07-6E2D-416A-B3E9-7F7ECB5F6941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5F9E99D-C500-4E74-B009-3FFC66762EB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5F9E99D-C500-4E74-B009-3FFC66762EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5F9E99D-C500-4E74-B009-3FFC66762EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5F9E99D-C500-4E74-B009-3FFC66762EB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

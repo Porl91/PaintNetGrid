@@ -7,7 +7,7 @@ public struct AABB {
 	public int Height;
 
 	public bool Contains(int x, int y) {
-		return !(x < X || y < Y || x >= X + Width || y >= Y + Height);
+		return !(x < X || y < Y || x > X + Width || y > Y + Height);
 	}
 
 	public bool OverlapsVertically(ref AABB other) {
