@@ -1,6 +1,7 @@
 ﻿using PaintDotNet;
 using PaintDotNet.Effects;
 using PaintDotNet.Imaging;
+using PaintDotNet.IndirectUI;
 using PaintDotNet.PropertySystem;
 using PaintDotNet.Rendering;
 
@@ -8,17 +9,19 @@ using PaintNetGrid.Sprites;
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace PaintNetGrid;
 
 internal sealed class PaintNetGridPlugin : PropertyBasedBitmapEffect {
+	private int _width = 32;
+	private int _height = 32;
+	private Alignment _alignment = Alignment.Center;
+	private ColorBgra _backgroundColour = ColorBgra.White;
+	private int _backgroundTolerance;
+
 	private IBitmapSource<ColorBgra32> _sourceBitmap;
 	private IBitmapSource<ColorAlpha8> _anchorsBitmap;
-	private int _width;
-	private int _height;
-	private Alignment _alignment = Alignment.Center;
 
 	public PaintNetGridPlugin() : base(
 		"PaintNetGrid",
@@ -31,7 +34,9 @@ internal sealed class PaintNetGridPlugin : PropertyBasedBitmapEffect {
 	private enum PropertyNames {
 		Width,
 		Height,
-		Alignment
+		Alignment,
+		BackgroundColour,
+		BackgroundTolerance
 	}
 
 	private enum Alignment {
@@ -48,11 +53,17 @@ internal sealed class PaintNetGridPlugin : PropertyBasedBitmapEffect {
 
 	protected override PropertyCollection OnCreatePropertyCollection() {
 		var alignments = Enum.GetNames<Alignment>();
+		var backgroundColour = (_backgroundColour.B << 24)
+			| (_backgroundColour.G << 16)
+			| (_backgroundColour.R << 8)
+			| _backgroundColour.A;
 
 		return new PropertyCollection(new List<Property> {
-			new Int32Property(PropertyNames.Width, 32, 1, 256),
-			new Int32Property(PropertyNames.Height, 32, 1, 256),
-			new StaticListChoiceProperty(PropertyNames.Alignment, alignments, Array.IndexOf(alignments, _alignment.ToString()))
+			new Int32Property(PropertyNames.Width, _width, 1, 256),
+			new Int32Property(PropertyNames.Height, _height, 1, 256),
+			new StaticListChoiceProperty(PropertyNames.Alignment, alignments, Array.IndexOf(alignments, _alignment.ToString())),
+			new Int32Property(PropertyNames.BackgroundColour, backgroundColour, int.MinValue, int.MaxValue),
+			new Int32Property(PropertyNames.BackgroundTolerance, _backgroundTolerance, 0, 255)
 		});
 	}
 
@@ -72,6 +83,14 @@ internal sealed class PaintNetGridPlugin : PropertyBasedBitmapEffect {
 		base.OnInitializeRenderInfo(renderInfo);
 	}
 
+	protected override ControlInfo OnCreateConfigUI(PropertyCollection props) {
+		var info = base.OnCreateConfigUI(props);
+		info.SetPropertyControlValue(PropertyNames.BackgroundTolerance, ControlInfoPropertyNames.DisplayName, "Background Colour Tolerance");
+		info.SetPropertyControlType(PropertyNames.BackgroundColour, PropertyControlType.ColorWheel);
+		info.SetPropertyControlValue(PropertyNames.BackgroundColour, ControlInfoPropertyNames.DisplayName, "Background Colour");
+		return info;
+	}
+
 	protected override void OnSetToken(PropertyBasedEffectConfigToken newToken) {
 		_width = newToken.GetProperty<Int32Property>(PropertyNames.Width).Value;
 		_height = newToken.GetProperty<Int32Property>(PropertyNames.Height).Value;
@@ -82,6 +101,8 @@ internal sealed class PaintNetGridPlugin : PropertyBasedBitmapEffect {
 		}
 
 		_alignment = alignment;
+		_backgroundColour = ColorBgra.FromUInt32((uint)newToken.GetProperty<Int32Property>(PropertyNames.BackgroundColour).Value);
+		_backgroundTolerance = newToken.GetProperty<Int32Property>(PropertyNames.BackgroundTolerance).Value;
 
 		base.OnSetToken(newToken);
 	}
@@ -102,7 +123,7 @@ internal sealed class PaintNetGridPlugin : PropertyBasedBitmapEffect {
 		var sourceRegion = sourceLock.AsRegionPtr();
 
 		var source = new RegionPtrSourceBuffer2D(sourceRegion);
-		var sprites = new SpriteExtractor(source, Color.FromArgb(255, 247, 247, 247)).Extract()
+		var sprites = new SpriteExtractor(source, _backgroundColour, _backgroundTolerance).Extract()
 			.Select(s => new SpriteCandidate(s))
 			.ToArray();
 

@@ -6,11 +6,13 @@ public sealed class SpriteExtractor {
 	private readonly ISourceBuffer2D _source;
 	private readonly Color _spaceColour;
 	private readonly ISpritesheet _sheet;
+	private readonly int _backgroundTolerance;
 
-	public SpriteExtractor(ISourceBuffer2D source, Color spaceColour) {
+	public SpriteExtractor(ISourceBuffer2D source, Color spaceColour, int backgroundTolerance = 0) {
 		_source = source;
 		_spaceColour = spaceColour;
 		_sheet = new Spritesheet(_source);
+		_backgroundTolerance = backgroundTolerance;
 	}
 
 	public List<Sprite> Extract() {
@@ -114,10 +116,15 @@ public sealed class SpriteExtractor {
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private bool IsWhitespaceColour(ref Color c) {
-		return c.R == _spaceColour.R
-			&& c.G == _spaceColour.G
-			&& c.B == _spaceColour.B
-			&& c.A == _spaceColour.A;
+		return IsWithinTolernance(c.R, _spaceColour.R)
+			&& IsWithinTolernance(c.G, _spaceColour.G)
+			&& IsWithinTolernance(c.B, _spaceColour.B)
+			&& IsWithinTolernance(c.A, _spaceColour.A);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private bool IsWithinTolernance(int first, int second) {
+		return Math.Abs(first - second) <= _backgroundTolerance;
 	}
 
 	public class PathNode {

@@ -32,6 +32,13 @@
 	  <None Update="Goldens\1\Source.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Goldens\2\Source.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Goldens\2\" />
 	</ItemGroup>
 
 </Project>
